@@ -44,3 +44,24 @@
   text-align: center;
   min-height: 100vh;
 }
+
+.x-axis {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: -215px;
+}
+
+.input {
+  margin-top: 100px;
+  margin-bottom: -100px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 5vh;
+  display: flex;
+}
+
+.y-axis-labels span {
+  display: block
+}

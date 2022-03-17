@@ -3,7 +3,7 @@ import BarChart from './components/BarChart';
 
 const App = () => {
   return (
-    <div className="center-screen">
+    <div>
       <BarChart />
     </div>
   )
