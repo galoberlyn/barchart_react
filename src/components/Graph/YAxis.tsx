@@ -12,15 +12,17 @@ const YAxis = (props: YAxisTypes) => {
 
   return (
     <>
-      <div className="y-axis-labels" style={{ minHeight: `${yAxisMaxValue}px`}}>
+      <div className="y-axis-labels" style={{ minHeight: `${yAxisMaxValue}px`, marginRight: 5 }}>
         <span>{yAxisMaxValue}</span>
         <span style={{ lineHeight: `${yAxisMaxValue}px` }}>{yAxisHalfValue}</span>
         <span>0</span>
       </div>
-      <Chart width={5} height={yAxisMaxValue}>
+      <Chart width={10} height={yAxisMaxValue}>
         <Bar
+          index={-1}
+          setIsDragging={() => null}
+          handleOnMouseMove={() => null}
           x={0}
-          // y={CONSTANTS.MAX_BAR_HEIGHT - datum.repos}
           y={0}
           width={5}
           height={yAxisMaxValue}
