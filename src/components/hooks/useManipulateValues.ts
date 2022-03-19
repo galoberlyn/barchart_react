@@ -70,3 +70,11 @@ export const useAdjustBarHeight = () => {
   return { sampleData, handleManipulateBarValue, handleOnMouseMove, setIsDragging };
 
 }
+
+
+export const useSustainGraphHeight = (maxValue: any) => {
+  const yAxisFinalValue = maxValue < 300 ? 300 : maxValue;
+  
+  return { yAxisFinalValue };
+
+}

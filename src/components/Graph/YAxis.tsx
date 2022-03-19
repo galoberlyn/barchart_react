@@ -1,5 +1,6 @@
 import Bar from '../BarChart/Bar';
 import Chart from '../BarChart/Chart';
+import { useSustainGraphHeight } from '../hooks/useManipulateValues';
 
 type YAxisTypes = {
   yAxisMaxValue: number;

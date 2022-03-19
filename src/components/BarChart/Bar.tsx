@@ -1,3 +1,5 @@
+import { useSustainGraphHeight } from '../hooks/useManipulateValues';
+
 type BarTypes = {
   x: string | number;
   index: number;
@@ -6,14 +8,26 @@ type BarTypes = {
   height: string | number;
   setIsDragging: (b: boolean) => void;
   handleOnMouseMove: (i: number, e: any) => void;
+  customCursor?: string;
 }
 
 const Bar = (props: BarTypes) => {
-  const { x, index, y, width, height, setIsDragging, handleOnMouseMove } = props;
+  const { 
+    x,
+    index,
+    y,
+    width,
+    height,
+    setIsDragging,
+    handleOnMouseMove,
+    customCursor
+  } = props;
+
+  const { yAxisFinalValue } = useSustainGraphHeight(height);
 
   return (
     <g 
-      style={{ fontSize: 12, cursor: 'pointer', userSelect: 'none' }}
+      style={{ fontSize: 12, cursor: customCursor ? customCursor : 'pointer', userSelect: 'none' }}
       onMouseDown={() => {
         setIsDragging(true);
       }}
