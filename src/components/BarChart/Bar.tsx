@@ -1,4 +1,4 @@
-import { useSustainGraphHeight } from '../hooks/useManipulateValues';
+import { GlobalState } from '../context/global';
 
 type BarTypes = {
   x: string | number;
@@ -7,7 +7,7 @@ type BarTypes = {
   width: string | number;
   height: string | number;
   setIsDragging: (b: boolean) => void;
-  handleOnMouseMove: (i: number, e: any) => void;
+  handleOnMouseMove: (i: number, e: any, yMax: number) => void;
   customCursor?: string;
 }
 
@@ -22,21 +22,25 @@ const Bar = (props: BarTypes) => {
     handleOnMouseMove,
     customCursor
   } = props;
-
-  const { yAxisFinalValue } = useSustainGraphHeight(height);
+  
 
   return (
-    <g 
-      style={{ fontSize: 12, cursor: customCursor ? customCursor : 'pointer', userSelect: 'none' }}
-      onMouseDown={() => {
-        setIsDragging(true);
-      }}
-      onMouseMove={e => handleOnMouseMove(index, e)}
-      onMouseUp={() => setIsDragging(false)}
-      onMouseLeave={() => setIsDragging(false)}
-    >
-      <rect x={x} y={y} width={width} height={height} />
-    </g>
+    <GlobalState.Consumer>
+      {({ yMax }) => (
+        <g 
+          style={{ fontSize: 12, cursor: customCursor ? customCursor : 'pointer', userSelect: 'none' }}
+          onMouseDown={() => {
+            setIsDragging(true);
+          }}
+          onMouseMove={e => handleOnMouseMove(index, e, yMax)}
+          onMouseUp={() => setIsDragging(false)}
+          onMouseLeave={() => setIsDragging(false)}
+          >
+          <rect x={x} y={y} width={width} height={height} />
+        </g>
+      )
+      }
+    </GlobalState.Consumer>
   )
 }
 

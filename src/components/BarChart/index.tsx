@@ -14,11 +14,12 @@ const BarChart = () => {
     sampleData,
     handleOnMouseMove,
     setIsDragging,
+    getSampleDataMaxValue,
   } = useAdjustBarHeight();
   
   return (
     <div className="bar-chart-root">
-      <Input manipulateYAxis={manipulateYAxis} yAxisMaxValue={yAxisMaxValue} />
+      <Input manipulateYAxis={manipulateYAxis} yAxisMaxValue={yAxisMaxValue} maxValue={getSampleDataMaxValue} />
       <div className="center-screen">
         <YAxis yAxisMaxValue={yAxisMaxValue} yAxisHalfValue={yAxisHalfValue} />
           <div className="bar-chart">
@@ -35,7 +36,7 @@ const BarChart = () => {
                     label={datum.repos}
                   />
                   <Bar
-                    index={CONSTANTS.X_AXIS_DISTANCE}
+                    index={index}
                     handleOnMouseMove={handleOnMouseMove}
                     setIsDragging={setIsDragging}
                     key={datum.name}

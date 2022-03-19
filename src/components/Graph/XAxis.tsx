@@ -1,5 +1,4 @@
 import Bar from '../BarChart/Bar';
-import Chart from '../BarChart/Chart';
 
 type XAxisTypes = {
     xAxisMaxValue: number;

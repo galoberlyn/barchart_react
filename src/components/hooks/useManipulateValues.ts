@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import { CONSTANTS, SampleDataTypes } from '../BarChart/constants';
 
 export const useManipulateYAxis = () => {
@@ -45,15 +45,17 @@ export const useAdjustBarHeight = () => {
     }
   ]);
 
+  const getSampleDataMaxValue = Math.max(...sampleData.map(data => data.repos));
+
   const [isDragging, setIsDragging] = useState(false);
   const [initialPos, setInitialPos] = useState(0);
 
-  const handleOnMouseMove = (index: number, e: any) => {
+  const handleOnMouseMove = (index: number, e: any, yMax: number) => {
     if (isDragging) {
       if (initialPos > e.clientY) {
-        handleManipulateBarValue(index, 'add');
+        handleManipulateBarValue(index, 'add', yMax);
       } else {
-        handleManipulateBarValue(index, 'subtract');
+        handleManipulateBarValue(index, 'subtract', yMax);
       }
       setInitialPos(e.clientY);
       return;
@@ -61,20 +63,24 @@ export const useAdjustBarHeight = () => {
     setInitialPos(e.clientY);
   }
 
-  const handleManipulateBarValue = (index: number, type: 'add' | 'subtract') => {
+  const handleManipulateBarValue = (index: number, type: 'add' | 'subtract', yMax: number) => {
     const dataContainer: SampleDataTypes[] = JSON.parse(JSON.stringify(sampleData));
-    type === 'add' ? dataContainer[index].repos++ : dataContainer[index].repos--;  
+    if (type === 'add') {
+      if (dataContainer[index].repos > yMax) {
+        alert('Cannot add more than max value of y axis');
+        return;
+      }
+      dataContainer[index].repos++
+    } else {
+      if (dataContainer[index].repos === 0) {
+        alert('Cannot have negative values');
+        return;
+      }
+      dataContainer[index].repos--;  
+    }
     setData(dataContainer);    
   } 
 
-  return { sampleData, handleManipulateBarValue, handleOnMouseMove, setIsDragging };
-
-}
-
-
-export const useSustainGraphHeight = (maxValue: any) => {
-  const yAxisFinalValue = maxValue < 300 ? 300 : maxValue;
-  
-  return { yAxisFinalValue };
+  return { sampleData, handleManipulateBarValue, handleOnMouseMove, setIsDragging, getSampleDataMaxValue };
 
 }
